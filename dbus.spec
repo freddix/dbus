@@ -1,7 +1,7 @@
 Summary:	D-BUS message bus
 Name:		dbus
 Version:	1.6.4
-Release:	3
+Release:	6
 License:	AFL v2.1 or GPL v2
 Group:		Libraries
 Source0:	http://dbus.freedesktop.org/releases/dbus/%{name}-%{version}.tar.gz
@@ -16,6 +16,7 @@ BuildRequires:	expat-devel
 BuildRequires:	libtool
 BuildRequires:	pkg-config
 BuildRequires:	systemd-devel
+BuildRequires:	xorg-libX11-devel
 Requires(post,preun,postun):	systemd-units
 Requires(postun):	coreutils
 Requires(pre):	pwdutils
@@ -46,6 +47,18 @@ Requires:	%{name}-libs = %{version}-%{release}
 %description devel
 Header files for D-BUS.
 
+%package launch
+Summary:	Utility to start a message bus from a shell script
+Group:		Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description launch
+The dbus-launch command is used to start a session bus instance
+of dbus-daemon from a shell script. It would normally be called
+from a user's  login scripts. Unlike the daemon itself, dbus-launch
+exits, so backticks or the $() construct can be used to read
+information from dbus-launch.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -63,6 +76,7 @@ Header files for D-BUS.
 	--disable-static					\
 	--disable-tests						\
 	--enable-systemd					\
+	--enable-x11-autolaunch					\
 	--with-console-auth-dir=/run/console/			\
 	--with-session-socket-dir=/tmp				\
 	--with-system-pid-file=/run/dbus/messagebus.pid		\
@@ -101,7 +115,7 @@ if [ "$1" = "0" ]; then
 	%userremove messagebus
 	%groupremove messagebus
 fi
-%systemd_reload
+%systemd_postun
 
 %post	libs -p /usr/sbin/ldconfig
 %postun	libs -p /usr/sbin/ldconfig
@@ -120,7 +134,6 @@ fi
 %attr(4750,root,messagebus) %{_libexecdir}/dbus-daemon-launch-helper
 %attr(755,root,root) %{_bindir}/dbus-cleanup-sockets
 %attr(755,root,root) %{_bindir}/dbus-daemon
-%attr(755,root,root) %{_bindir}/dbus-launch
 %attr(755,root,root) %{_bindir}/dbus-monitor
 %attr(755,root,root) %{_bindir}/dbus-send
 %attr(755,root,root) %{_bindir}/dbus-uuidgen
@@ -134,7 +147,6 @@ fi
 
 %{_mandir}/man1/dbus-cleanup-sockets.1*
 %{_mandir}/man1/dbus-daemon.1*
-%{_mandir}/man1/dbus-launch.1*
 %{_mandir}/man1/dbus-monitor.1*
 %{_mandir}/man1/dbus-send.1*
 %{_mandir}/man1/dbus-uuidgen.1*
@@ -158,4 +170,9 @@ fi
 %{_includedir}/dbus*
 %{_libdir}/dbus-*/include
 %{_pkgconfigdir}/dbus-1.pc
+
+%files launch
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/dbus-launch
+%{_mandir}/man1/dbus-launch.1*
 
