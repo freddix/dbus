@@ -1,11 +1,11 @@
 Summary:	D-BUS message bus
 Name:		dbus
-Version:	1.6.4
-Release:	6
+Version:	1.6.8
+Release:	1
 License:	AFL v2.1 or GPL v2
 Group:		Libraries
 Source0:	http://dbus.freedesktop.org/releases/dbus/%{name}-%{version}.tar.gz
-# Source0-md5:	5ec43dc4554cba638917317b2b4f7640
+# Source0-md5:	3bf059c7dd5eda5f539a1b7cfe7a14a2
 Source1:	%{name}-tmpfiles.conf
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-fix-sba-for-dbus-activation.patch
