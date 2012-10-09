@@ -1,7 +1,7 @@
 Summary:	D-BUS message bus
 Name:		dbus
 Version:	1.6.8
-Release:	1
+Release:	2
 License:	AFL v2.1 or GPL v2
 Group:		Libraries
 Source0:	http://dbus.freedesktop.org/releases/dbus/%{name}-%{version}.tar.gz
