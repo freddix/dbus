@@ -1,7 +1,7 @@
 Summary:	D-BUS message bus
 Name:		dbus
 Version:	1.6.12
-Release:	1
+Release:	2
 License:	AFL v2.1 or GPL v2
 Group:		Libraries
 Source0:	http://dbus.freedesktop.org/releases/dbus/%{name}-%{version}.tar.gz
@@ -72,14 +72,16 @@ information from dbus-launch.
 %{__automake}
 %configure \
 	--disable-asserts					\
+	--disable-dnotify					\
 	--disable-silent-rules					\
 	--disable-static					\
 	--disable-tests						\
 	--enable-systemd					\
 	--enable-x11-autolaunch					\
 	--with-console-auth-dir=/run/console/			\
-	--with-session-socket-dir=/tmp				\
-	--with-system-pid-file=/run/dbus/messagebus.pid		\
+	--with-session-socket-dir=/run/dbus			\
+	--with-system-pid-file=/run/dbus/pid			\
+	--with-system-socket=/run/dbus/system_bus_socket	\
 	--with-systemdsystemunitdir=%{systemdunitdir}		\
 	--with-xml=expat
 %{__make}
