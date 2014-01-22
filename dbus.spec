@@ -1,14 +1,13 @@
 Summary:	D-BUS message bus
 Name:		dbus
-Version:	1.6.18
+Version:	1.8.0
 Release:	1
 License:	AFL v2.1 or GPL v2
 Group:		Libraries
 Source0:	http://dbus.freedesktop.org/releases/dbus/%{name}-%{version}.tar.gz
-# Source0-md5:	b02e9c95027a416987b81f9893831061
+# Source0-md5:	059fbe84e39fc99c67a14f15b1f39dff
 Source1:	%{name}-tmpfiles.conf
 Patch0:		%{name}-nolibs.patch
-Patch1:		%{name}-fix-sba-for-dbus-activation.patch
 URL:		http://www.freedesktop.org/Software/dbus
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -62,7 +61,6 @@ information from dbus-launch.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -72,17 +70,16 @@ information from dbus-launch.
 %{__automake}
 %configure \
 	--disable-asserts					\
-	--disable-dnotify					\
 	--disable-silent-rules					\
 	--disable-static					\
 	--disable-tests						\
+	--disable-verbose-mode					\
 	--enable-systemd					\
 	--enable-x11-autolaunch					\
 	--with-console-auth-dir=/run/console/			\
 	--with-system-pid-file=/run/dbus/pid			\
 	--with-system-socket=/run/dbus/system_bus_socket	\
-	--with-systemdsystemunitdir=%{systemdunitdir}		\
-	--with-xml=expat
+	--with-systemdsystemunitdir=%{systemdunitdir}
 %{__make}
 
 %install
@@ -136,6 +133,7 @@ fi
 %attr(755,root,root) %{_bindir}/dbus-cleanup-sockets
 %attr(755,root,root) %{_bindir}/dbus-daemon
 %attr(755,root,root) %{_bindir}/dbus-monitor
+%attr(755,root,root) %{_bindir}/dbus-run-session
 %attr(755,root,root) %{_bindir}/dbus-send
 %attr(755,root,root) %{_bindir}/dbus-uuidgen
 
@@ -149,6 +147,7 @@ fi
 %{_mandir}/man1/dbus-cleanup-sockets.1*
 %{_mandir}/man1/dbus-daemon.1*
 %{_mandir}/man1/dbus-monitor.1*
+%{_mandir}/man1/dbus-run-session.1*
 %{_mandir}/man1/dbus-send.1*
 %{_mandir}/man1/dbus-uuidgen.1*
 
