@@ -1,11 +1,11 @@
 Summary:	D-BUS message bus
 Name:		dbus
-Version:	1.8.0
+Version:	1.8.6
 Release:	1
 License:	AFL v2.1 or GPL v2
-Group:		Libraries
+Group:		Core/System
 Source0:	http://dbus.freedesktop.org/releases/dbus/%{name}-%{version}.tar.gz
-# Source0-md5:	059fbe84e39fc99c67a14f15b1f39dff
+# Source0-md5:	6a08ba555d340e9dfe2d623b83c0eea8
 Source1:	%{name}-tmpfiles.conf
 Patch0:		%{name}-nolibs.patch
 URL:		http://www.freedesktop.org/Software/dbus
@@ -91,8 +91,6 @@ install -d $RPM_BUILD_ROOT%{_datadir}/dbus-1/{interfaces,services}	\
 	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{systemdtmpfilesdir}/%{name}.conf
-
-rm -rf $RPM_BUILD_ROOT%{_docdir}/dbus/api
 
 %clean
 rm -rf $RPM_BUILD_ROOT
