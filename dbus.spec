@@ -1,11 +1,11 @@
 Summary:	D-BUS message bus
 Name:		dbus
-Version:	1.8.6
+Version:	1.8.8
 Release:	1
 License:	AFL v2.1 or GPL v2
 Group:		Core/System
 Source0:	http://dbus.freedesktop.org/releases/dbus/%{name}-%{version}.tar.gz
-# Source0-md5:	6a08ba555d340e9dfe2d623b83c0eea8
+# Source0-md5:	b9f4a18ee3faa1e07c04aa1d83239c43
 Source1:	%{name}-tmpfiles.conf
 Patch0:		%{name}-nolibs.patch
 URL:		http://www.freedesktop.org/Software/dbus
@@ -15,6 +15,7 @@ BuildRequires:	expat-devel
 BuildRequires:	libtool
 BuildRequires:	pkg-config
 BuildRequires:	systemd-devel
+BuildRequires:	xmlto
 BuildRequires:	xorg-libX11-devel
 Requires(post,preun,postun):	systemd-units
 Requires(postun):	coreutils
@@ -91,6 +92,8 @@ install -d $RPM_BUILD_ROOT%{_datadir}/dbus-1/{interfaces,services}	\
 	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{systemdtmpfilesdir}/%{name}.conf
+
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
