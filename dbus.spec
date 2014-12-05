@@ -1,11 +1,11 @@
 Summary:	D-BUS message bus
 Name:		dbus
-Version:	1.8.10
+Version:	1.8.12
 Release:	1
 License:	AFL v2.1 or GPL v2
 Group:		Core/System
 Source0:	http://dbus.freedesktop.org/releases/dbus/%{name}-%{version}.tar.gz
-# Source0-md5:	6be5ef99ae784de9d04589eb067fe038
+# Source0-md5:	0ca23fc84c09cb3d29b9c27811ff4475
 Source1:	%{name}-tmpfiles.conf
 Patch0:		%{name}-nolibs.patch
 URL:		http://www.freedesktop.org/Software/dbus
