@@ -1,11 +1,11 @@
 Summary:	D-BUS message bus
 Name:		dbus
-Version:	1.8.12
+Version:	1.8.14
 Release:	1
 License:	AFL v2.1 or GPL v2
 Group:		Core/System
 Source0:	http://dbus.freedesktop.org/releases/dbus/%{name}-%{version}.tar.gz
-# Source0-md5:	0ca23fc84c09cb3d29b9c27811ff4475
+# Source0-md5:	dfb810eda8780cf9debf7169b3ca5fe1
 Source1:	%{name}-tmpfiles.conf
 Patch0:		%{name}-nolibs.patch
 URL:		http://www.freedesktop.org/Software/dbus
@@ -17,7 +17,6 @@ BuildRequires:	pkg-config
 BuildRequires:	systemd-devel
 BuildRequires:	xmlto
 BuildRequires:	xorg-libX11-devel
-Requires(post,preun,postun):	systemd-units
 Requires(postun):	coreutils
 Requires(pre):	pwdutils
 Requires:	%{name}-libs = %{version}-%{release}
@@ -102,19 +101,11 @@ rm -rf $RPM_BUILD_ROOT
 %groupadd -g 100 messagebus
 %useradd -u 100 -d /usr/share/empty -s /usr/bin/false -c "System message bus" -g messagebus messagebus
 
-%post
-export NORESTART="yes"
-%systemd_post messagebus.service
-
-%preun
-%systemd_preun messagebus.service
-
 %postun
 if [ "$1" = "0" ]; then
 	%userremove messagebus
 	%groupremove messagebus
 fi
-%systemd_postun
 
 %post	libs -p /usr/sbin/ldconfig
 %postun	libs -p /usr/sbin/ldconfig
